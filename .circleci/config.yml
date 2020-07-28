@@ -1,0 +1,14 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: ubuntu:latest
+
+    steps:
+      - run: |
+          export DEBIAN_FRONTEND=noninteractive
+          apt update
+          apt -yq install docker.io
+
+      - run: docker -v
