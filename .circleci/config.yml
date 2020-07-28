@@ -1,14 +1,26 @@
-version: 2.1
-
 jobs:
   build:
-    docker:
-      - image: ubuntu:latest
+    - image: ubuntu:20.04
 
     steps:
-      - run: |
-          export DEBIAN_FRONTEND=noninteractive
-          apt update
-          apt -yq install docker.io
+      - run: apt update
+      - run: apt install openjdk-8-jdk
+  
+  test:
+    docker:
+      - image: ubuntu:20.04
 
-      - run: docker -v
+    steps:
+      - run: java -version
+
+
+workflows:
+  version: 2.1
+
+  build-and-test:
+    jobs:
+      - build
+      - test:
+        requires:
+          - build
+
